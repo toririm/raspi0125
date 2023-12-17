@@ -1,0 +1,35 @@
+[tool.poetry]
+name = "raspi0125-api-server"
+version = "0.1.0"
+description = ""
+authors = ["toririm <59079411+toririm@users.noreply.github.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.105.0"
+uvicorn = "^0.24.0.post1"
+pydantic = "^2.5.2"
+sqlalchemy = "^2.0.23"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.1.8"
+poethepoet = "^0.24.4"
+
+[tool.poe.tasks]
+check = "ruff check"
+format = "ruff format"
+lint = ["check", "format"]
+run = "uvicorn api-server.main:app --reload --workers 1 --port 8000"
+
+[tool.poe.tasks.install]
+help = "Note: add --with dev to install dev dependencies"
+cmd = "poetry install --no-root"
+
+
+[tool.ruff]
+exclude = ["raspberrypi-src"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
